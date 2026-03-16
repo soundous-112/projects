@@ -19,7 +19,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/tp3_exercice1:v1 .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/project:v1 .
       
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/tp3_exercice1:v1
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/project:v1
