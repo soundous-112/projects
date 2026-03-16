@@ -1,26 +1,25 @@
-name: CI Exercice 1
+name: CI Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  build-and-test:
+  build-and-push:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout du code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/Checkout@v3
 
-      - name: Installation de Python
-        uses: actions/setup-python@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          python-version: '3.10'
-
-      - name: Installation des dépendances
-        run: pip install -r requirements.txt
-
-      - name: Exécution des tests pytest
-        run: python -m pytest tests/
-
-      - name: Build de l'image Docker
-        run: docker build -t calculatrice-app .
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/tp3_exercice1:v1 .
+      
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/tp3_exercice1:v1
